@@ -47,15 +47,19 @@ export default function Form() {
       <div className="input-group">
         {/* 👇 Maybe you could generate the checkboxes dynamically */}
         <label key="1">
+
           <input
             name="Pepperoni"
             type="checkbox"
+            name="Pepperoni"
+            type="checkbox"   
           />
           Pepperoni<br />
         </label>
+
       </div>
       {/* 👇 Make sure the submit stays disabled until the form validates! */}
-      <input type="submit" />
+      <input type="submit"  value="Submit" disabled />
     </form>
   )
 }

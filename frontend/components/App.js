@@ -9,7 +9,7 @@ function App() {
     <div id="app">
       <nav>
     <Link to="/">Home</Link>&nbsp;
-    <Link to="Form />">Form</Link>&nbsp;
+    <Link to="/order">Order</Link>&nbsp;
 
 
         {/* NavLinks here */}
@@ -18,11 +18,11 @@ function App() {
       
       <Routes>
         <Route path= "/" element={<Home />} />
-        <Route path= "Form" element={<Form />} />
+        <Route path="/order"element={<Form />} />
 
       </Routes>
-      <App />
-      <Form />
+     
+
     </div>
   )
 }

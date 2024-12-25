@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from "react";
 
 // 👇 Here are the validation errors you will use with Yup.
 const validationErrors = {
@@ -6,60 +6,85 @@ const validationErrors = {
   fullNameTooLong: 'full name must be at most 20 characters',
   sizeIncorrect: 'size must be S or M or L'
 }
-
 // 👇 Here you will create your schema.
 
+export default function Form() {
+  const [values, setValues] = useState({
+    fullName: "",
+    size: "",
+    toppings: [],
+  });
 // 👇 This array could help you construct your checkboxes using .map in the JSX.
 const toppings = [
-  { topping_id: '1', text: 'Pepperoni' },
-  { topping_id: '2', text: 'Green Peppers' },
-  { topping_id: '3', text: 'Pineapple' },
-  { topping_id: '4', text: 'Mushrooms' },
-  { topping_id: '5', text: 'Ham' },
-]
+    { topping_id: "1", text: "Pepperoni" },
+    { topping_id: "2", text: "Green Peppers" },
+    { topping_id: "3", text: "Pineapple" },
+    { topping_id: "4", text: "Mushrooms" },
+    { topping_id: "5", text: "Ham" },
+  ]
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log("Form submitted with values:", values);
+    setValues({
+      fullName: "",
+      size: "",
+      toppings: [],
+    });
+  };
 
-export default function Form() {
+  const handleChange = (evt) => {
+    const { type, checked, name, value: inputValue } = evt.target;
+
+    if (type === "checkbox") {
+      const toppingText = toppings.find((t) => t.topping_id === name)?.text;
+      setValues((prevValues) => ({
+        ...prevValues,
+        toppings: checked
+          ? [...prevValues.toppings, toppingText]
+          : prevValues.toppings.filter((t) => t !== toppingText),
+      }));
+    } else {
+      setValues((prevValues) => ({ ...prevValues, [name]: inputValue }));
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Order Your Pizza</h2>
-      {true && <div className='success'>Thank you for your order!</div>}
-      {true && <div className='failure'>Something went wrong</div>}
-
       <div className="input-group">
-        <div>
-          <label htmlFor="fullName">Full Name</label><br />
-          <input placeholder="Type full name" id="fullName" type="text" />
-        </div>
-        {true && <div className='error'>Bad value</div>}
+        <label htmlFor="fullName">Full Name</label>
+        <input
+          placeholder="Type full name"
+          name="fullName"
+          type="text"
+          value={values.fullName}
+          onChange={handleChange}
+        />
       </div>
-
       <div className="input-group">
-        <div>
-          <label htmlFor="size">Size</label><br />
-          <select id="size">
-            <option value="">----Choose Size----</option>
-            {/* Fill out the missing options */}
-          </select>
-        </div>
-        {true && <div className='error'>Bad value</div>}
+        <label>Size</label>
+        <select name="size" value={values.size} onChange={handleChange}>
+          <option value="">----Choose Size----</option>
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+        </select>
       </div>
-
       <div className="input-group">
-        {/* 👇 Maybe you could generate the checkboxes dynamically */}
-        <label key="1">
-
-          <input
-            name="Pepperoni"
-            type="checkbox"
-            name="Pepperoni"
-            type="checkbox"   
-          />
-          Pepperoni<br />
-        </label>
-
+        <p>Choose Toppings:</p>
+        {toppings.map((topping) => (
+          <label key={topping.topping_id}>
+            <input
+              type="checkbox"
+              name={topping.topping_id}
+              checked={values.toppings.includes(topping.text)}
+              onChange={handleChange}
+            />
+            {topping.text}
+          </label>
+        ))}
       </div>
-      {/* 👇 Make sure the submit stays disabled until the form validates! */}
-      <input type="submit"  value="Submit" disabled />
+      <input type="submit" value="Submit" />
     </form>
-  )
+  );
 }

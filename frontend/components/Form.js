@@ -115,7 +115,7 @@ export default function Form() {
       </div>
 
       <div className="input-group">
-      {true && <div className='error'></div>}
+      {errors && <div className='error'>{errors}</div>}
 
         <label>Size</label>
         <select name="size" value={values.size} onChange={handleChange}>

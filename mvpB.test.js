@@ -30,7 +30,7 @@ describe('Sprint 7 Challenge Learner Tests', () => {
     [6] renders a text that includes "javaScript is pretty" (use exact = false)
   */
   test('you can comment out this test', () => {
-    expect(true).toBe(false)
+    expect(true).toBe(true)
   })
 })
 
